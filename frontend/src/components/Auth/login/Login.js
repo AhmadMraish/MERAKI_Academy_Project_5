@@ -24,28 +24,15 @@ export const Login = () => {
   const [picture, setPicture] = useState("");
 
   const dispatch = useDispatch();
+
   const state = useSelector((state) => {
     return { isLoggedIn: state.isLoggedIn.isLoggedIn };
   });
 
-  const state1 = useSelector((state) => {
-    return { token: state.token_1.token };
-  });
-
-  const saveToken = async () => {
-    console.log("outside");
-    console.log("rrrrrrrrrrrrrrrrrrr",state1.token)
-    const user = await jwt.decode(state1.token);
-    console.log("user", user);
-    // if (user) {}
-      console.log("inside");
-      dispatch(setIsLoggedIn(true));
-      dispatch(setUserId(user.userId));
-      localStorage.setItem("token", state1.token);
-    
-  };
-
-  const login = async (e) => {
+  const state1=useSelector((state)=>{
+   return {token: state.token_1.token}
+  })
+  const loginSender = async (e) => {
     e.preventDefault();
 
     try {
@@ -53,11 +40,13 @@ export const Login = () => {
         email,
         passwordd,
       });
+      // console.log("res",res)
+      // console.log("res data",res.data)
       if (res.data.success) {
         setMessage("");
         dispatch(setIsLoggedIn(true));
         dispatch(setToken(res.data.token));
-        saveToken();
+        localStorage.setItem("token",res.data.token)
       } else throw Error;
     } catch (error) {
       if (error.response && error.response.data) {
@@ -65,10 +54,10 @@ export const Login = () => {
       }
     }
   };
-
+ 
   useEffect(() => {
     if (state.isLoggedIn) {
-      history.push("/home");
+      history.push("/home")
     }
   });
 
@@ -94,7 +83,7 @@ export const Login = () => {
     <>
       {!state.isLoggedIn ? (
         <>
-          <form onSubmit={login}>
+          <form onSubmit={loginSender}>
             <br />
 
             <input
@@ -109,7 +98,7 @@ export const Login = () => {
               onChange={(e) => setPasswordd(e.target.value)}
             />
             <br />
-            <button>Login</button>
+            <button >Login</button>
           </form>
           {message && <div>{message}</div>}
         </>
@@ -118,7 +107,18 @@ export const Login = () => {
       )}
 
       
-      <>
+      
+    </>
+
+
+
+
+  );
+};
+
+
+/*
+<>
       <div className="container">
         <Card style={{ width: "600px" }}>
           <Card.Header>
@@ -143,10 +143,4 @@ export const Login = () => {
         </Card>
       </div>
       </>
-    </>
-
-
-
-
-  );
-};
+*/
