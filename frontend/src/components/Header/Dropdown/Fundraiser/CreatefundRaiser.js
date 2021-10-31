@@ -8,6 +8,8 @@ import Row from "react-bootstrap/Row";
 import axios from "axios";
 import { storage } from "../../../../FireBase/FireBase";
 import { useHistory } from "react-router-dom";
+import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
+import "react-quill/dist/quill.snow.css";
 // import "./CreatefundRaiser.css;
 // import userId from "../../../../reducers/login/userId";
 
@@ -129,7 +131,8 @@ const CreatefundRaiser = (e) => {
 
   <Form.Group className="mb-3" controlId="formGridAddress2">
     <Form.Label>Your Fundraiser description </Form.Label>
-    <textarea className="form-control" type="text" id="exampleFormControlTextarea1" placeholder="Here ..." rows="3" onChange={(e)=>{setDescriptionn(e.target.value)}} maxLength="245" ></textarea>
+   <ReactQuill  theme="snow"  value ={descriptionn} onChange={setDescriptionn}/>
+    {/* // <textarea className="form-control" type="text" id="exampleFormControlTextarea1" placeholder="Here ..." rows="3" onChange={(e)=>{setDescriptionn(e.target.value)}} maxLength="245" ></textarea> */}
   </Form.Group>
 
   <Row className="mb-3">
